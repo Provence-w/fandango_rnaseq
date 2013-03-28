@@ -108,7 +108,9 @@ def check_split_alignments(alignments, introns):
     locus_name = flist[3]
     
     #split should be in locus_start-1 and locus_end + 1
-    [total_locus, unsplit, well_split, mis_split] = process_locus_split(samfile, locus_chr, locus_start-1, locus_end+1)
+    #Carefull with off-by-1 errors with BED (0-based) and others 1-based!!
+    #[total_locus, unsplit, well_split, mis_split] = process_locus_split(samfile, locus_chr, locus_start-1, locus_end+1)
+    [total_locus, unsplit, well_split, mis_split] = process_locus_split(samfile, locus_chr, locus_start-1, locus_end)
 	
     #only print if there is a minimum number of reads in the locus... (?). No... make that afterwards
     #if(total_locus > minimum):     
