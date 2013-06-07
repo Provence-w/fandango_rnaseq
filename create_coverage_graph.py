@@ -57,12 +57,9 @@ def process_locus_split(samfile,locus_chr, locus_start,locus_end):
   return [total_locus, counts]
 
 
-def create_coverage_graph(alignments, input_bed, length):
+def create_coverage_graph(alignments, input_bed, length, minimum):
   samfile = pysam.Samfile( alignments, "rb" )
    
-  #Arbitrary, pass as parameter...
-  minimum = 50
-  
   feat_file=open(input_bed,"r")
 
   for line in feat_file:
@@ -92,10 +89,13 @@ def create_coverage_graph(alignments, input_bed, length):
 
     
 
-instructions = "e.g. python create_coverage_graph.py alignments.bam features.bed len"
+instructions = "e.g. python create_coverage_graph.py alignments.bam features.bed len [min=50]"
 
 if __name__=="__main__":
     if len(sys.argv) == 4:
-        create_coverage_graph(sys.argv[1],sys.argv[2], int(sys.argv[3]))
+        create_coverage_graph(sys.argv[1],sys.argv[2], int(sys.argv[3]), 50)
     else:
-        print instructions
+	if len(sys.argv) == 5:
+            create_coverage_graph(sys.argv[1],sys.argv[2], int(sys.argv[3]), int(sys.argv[4]))
+	else:
+            print instructions
